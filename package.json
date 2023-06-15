@@ -1,0 +1,27 @@
+{
+  "name": "stock_viewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fetcher.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Preetham-Saldanha/stock_viewer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Preetham-Saldanha/stock_viewer/issues"
+  },
+  "homepage": "https://github.com/Preetham-Saldanha/stock_viewer#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.1",
+    "request": "^2.88.2"
+  }
+}
