@@ -3,15 +3,17 @@ import request from "request";
 
 // replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 // var url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TTM&interval=1min&apikey=${process.env.API_KEY}`;
-var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=FINEORG.BSE&outputsize=full&apikey=${process.env.API_KEY}`;
+// var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=FINEORG.BSE&outputsize=full&apikey=${process.env.API_KEY}`;
 // var url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TTM.NS&interval=15min&apikey=${process.env.API_KEY}&datatype=json`
 
-
-export default function fetcher(req, res, next) {
-  console.log("reached to fetcher...s")
+export default async function fetcher(id) {
+  let urlFirstPart = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="`;
+  let urlSecondPart = `.BSE&outputsize=full&apikey=${process.env.API_KEY}`;
+  let customURL = urlFirstPart + id + urlSecondPart;
+  console.log("reached to fetcher...s");
   request.get(
     {
-      url: url,
+      url: customURL,
       json: true,
       headers: { "User-Agent": "request" },
     },
@@ -26,17 +28,14 @@ export default function fetcher(req, res, next) {
         // console.log(Object.entries(data["Time Series (Daily)"]).length)
         const latest = Object.entries(data["Time Series (Daily)"])[0];
         // console.log(latest);
-        req.data = latest
+        return latest;
         //   const latest = curr[0];
         //   const begining = curr[14];
-        next()
+        // next()
       }
     }
   );
 }
-
-
-
 
 // [
 //   '2023-06-14',

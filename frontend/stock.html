@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Line Graph with Chart.js</title>
+    <style>
+      .heading {
+        margin: 0;
+        text-align: center;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: teal;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+        column-gap: 20px;
+      }
+
+      .card {
+        width: calc(20% - 20px);
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        /* column-break-inside: avoid; */
+      }
+
+      @media (max-width: 768px) {
+        .card {
+          width: 100%;
+        }
+      }
+
+      h2 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 14px;
+        margin: 0;
+      }
+
+      canvas {
+        /* position: absolute; */
+        position: relative;
+        height: 50vh;
+      }
+
+      .canvas-container {
+        margin: auto;
+        width: 60%;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <h1 class="heading"></h1>
+    <div class="canvas-container"><canvas id="lineChart"></canvas></div>
+    <div id="container" class="container"></div>
+
+    <script>
+      // Data from the provided array
+      document.addEventListener("DOMContentLoaded", async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Retrieve the data from the query string
+        const securityId = urlParams.get("Security Id");
+        const data = {};
+
+        // Iterate over the URL parameters and populate the data object
+        for (const [key, value] of urlParams) {
+          data[key] = value;
+        }
+
+        const container = document.getElementById("container");
+        document.getElementsByClassName("heading")[0].innerHTML =
+          data["Issuer Name"];
+
+        for (const key in data) {
+          const card = document.createElement("div");
+          card.classList.add("card");
+
+          const heading = document.createElement("h2");
+          heading.textContent = key;
+
+          const value = document.createElement("p");
+          value.textContent = data[key];
+
+          card.appendChild(heading);
+          card.appendChild(value);
+
+          container.appendChild(card);
+        }
+
+        // ... retrieve other properties as needed
+        console.log(urlParams, securityId, data);
+        // Use the data to populate and replace the content on the page
+        // document.getElementById("securityId").textContent = securityId;
+        const response = await fetch(
+          `http://localhost:3000/api/stock/${securityId}`
+        );
+        const dataArray = await response.json();
+        console.log(dataArray);
+        // Extract the first and last dates of each year
+        const yearlyDates = [];
+        dataArray.forEach(([date, _], index) => {
+          const year = date.substr(0, 4);
+          if (
+            index === 0 ||
+            date.substr(0, 4) !== dataArray[index - 1][0].substr(0, 4)
+          ) {
+            yearlyDates.unshift(date);
+          } else if (
+            index === dataArray.length - 1 ||
+            date.substr(0, 4) !== dataArray[index + 1][0].substr(0, 4)
+          ) {
+            yearlyDates.unshift(date);
+          }
+        });
+
+        // Extract the "close" values for the yearly dates
+        const yearlyCloseData = yearlyDates.map((yearlyDate) => {
+          const matchingData = dataArray.find(
+            ([date, _]) => date === yearlyDate
+          );
+          return parseFloat(matchingData[1]["4. close"]);
+        });
+        console.log(yearlyDates, yearlyCloseData);
+        // Get the chart canvas element
+        const ctx = document.getElementById("lineChart").getContext("2d");
+
+        // Create the line chart
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: yearlyDates,
+            datasets: [
+              {
+                label: "Close Price",
+                data: yearlyCloseData,
+                borderColor: "blue",
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

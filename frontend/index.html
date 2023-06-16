@@ -1,34 +1,74 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-
-<body>
+  <body>
     <nav>
-        <ul>
-            <li><a href="home.html">Home</a></li>
-            <li><a href="insights.html">Insights</a></li>
-            <li id="search-bar">
-                <input type="text" placeholder="Search...">
-                <button type="submit">Search</button>
-            </li>
-            <li><a href="watchlist.html">Watchlist</a></li>
-
-        </ul>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="insights.html">Insights</a></li>
+        <li id="search-bar">
+          <input type="text" placeholder="Search..." />
+          <button type="submit">Search</button>
+        </li>
+        <li><a href="watchlist.html">Watchlist</a></li>
+      </ul>
     </nav>
 
     <!-- section of landing -->
 
     <section class="landing-section">
-        <div class="landing-content">
-            <h1 class="landing-heading">Welcome to StockScreen!</h1>
-            <p class="landing-description">Find and analyze stocks like never before.</p>
-        </div>
+      <div class="landing-content">
+        <h1 class="landing-heading">Welcome to StockScreen!</h1>
+        <p class="landing-description">
+          Find and analyze stocks like never before.
+        </p>
+      </div>
     </section>
 
-    <section class="fading-section"></section>
-</body>
+    <section class="fading-section">
+      <table id="stockTable">
+        <thead>
+          <tr>
+            <th>Serial Number</th>
+            <th>Company Name</th>
+            <th>Security ID</th>
+            <th>Sector Name</th>
+            <th>Open</th>
+            <th>Close</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Open-Close (%)</th>
+            <th>Market Cap(lakhs)</th>
+          </tr>
+        </thead>
+        <tbody id="stockTableBody"></tbody>
+      </table>
+    </section>
 
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h4>About Us</h4>
+          </div>
+          <div class="col-md-4">
+            <h4>Contact Us</h4>
+          </div>
+          <div class="col-md-4">
+            <h4>Follow Us</h4>
+            <!-- <ul>
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">LinkedIn</a></li>
+            </ul> -->
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>
