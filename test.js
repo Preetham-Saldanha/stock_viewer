@@ -31,5 +31,5 @@ const filePath = path.join(__dirname, "data_per_day", "Saturday-06-17.json");
 
 fs.readFile(filePath, "utf8", (err, fileData) => {
   const data = JSON.parse(fileData);
-  console.log(data["top_15_entries_with_stock_data"].length);
+  console.log(data.length);
 });
