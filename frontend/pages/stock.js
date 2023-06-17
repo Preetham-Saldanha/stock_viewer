@@ -41,27 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const dataArray = await response.json();
   console.log(dataArray);
   // Extract the first and last dates of each year
-  const yearlyDates = [];
-  dataArray.forEach(([date, _], index) => {
-    const year = date.substr(0, 4);
-    if (
-      index === 0 ||
-      date.substr(0, 4) !== dataArray[index - 1][0].substr(0, 4)
-    ) {
-      yearlyDates.unshift(date);
-    } else if (
-      index === dataArray.length - 1 ||
-      date.substr(0, 4) !== dataArray[index + 1][0].substr(0, 4)
-    ) {
-      yearlyDates.unshift(date);
-    }
-  });
-
-  // Extract the "close" values for the yearly dates
-  const yearlyCloseData = yearlyDates.map((yearlyDate) => {
-    const matchingData = dataArray.find(([date, _]) => date === yearlyDate);
-    return parseFloat(matchingData[1]["4. close"]);
-  });
+  const { yearlyDates, yearlyCloseData } = dataArray;
   console.log(yearlyDates, yearlyCloseData);
   // Get the chart canvas element
   const ctx = document.getElementById("lineChart").getContext("2d");

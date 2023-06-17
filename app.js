@@ -2,9 +2,15 @@ import express from "express";
 const app = express();
 const port = 3000;
 import request from "request";
-import fetcher from "./fetcher.js";
+
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+// Get the directory name
+// import fetcher from "./fetcher.js";
 import cors from "cors";
 import fs from "fs";
+import path from "path";
 import fetch from "node-fetch";
 app.use(cors());
 
@@ -82,6 +88,8 @@ const results = [];
 // const fs = require("fs");
 // const fetch = require("node-fetch");
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 async function fetchStockData(securityId, isSingleEntry) {
   const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${securityId}.BSE&outputsize=full&apikey=${process.env.API_KEY}`;
 
@@ -105,11 +113,12 @@ async function fetchStockData(securityId, isSingleEntry) {
 
 const initialRunMiddleware = async (req, res, next) => {
   try {
+    console.time("fetchTop-15");
     const fileData = await fs.promises.readFile("finalData.json", "utf8");
     const data = JSON.parse(fileData);
     const top15Entries = Object.keys(data).slice(0, 15);
     const results = [];
-
+    console.log(top15Entries.length, "total stocks count");
     for (const entry of top15Entries) {
       const securityId = data[entry]["Security Id"];
 
@@ -127,8 +136,34 @@ const initialRunMiddleware = async (req, res, next) => {
     const response = {
       top_15_entries_with_stock_data: results,
     };
+
+    // Example object (dictionary)
+
+    // Convert the object to JSON format
+    const jsonData = JSON.stringify(response);
+
+    // Example usage
+    const currentDate = formatDateToString();
+    console.log("checking date here", currentDate);
+    // Define the file path
+    const filePath = path.join(
+      __dirname,
+      "data_per_day",
+      `${currentDate}.json`
+    );
+
+    // Write the JSON data to the file
+    fs.writeFile(filePath, jsonData, (err) => {
+      if (err) {
+        console.error("Error writing JSON file:", err);
+      } else {
+        console.log("JSON file has been written successfully.");
+      }
+    });
+
     req.data = response;
-    console.log(response);
+    // console.log(response);
+    console.timeEnd("fetchTop-15");
     next();
   } catch (error) {
     console.error("Error reading finalData.json:", error);
@@ -139,12 +174,12 @@ const initialRunMiddleware = async (req, res, next) => {
 // initialRunMiddleware(req, res, next);
 
 // Routes
-// app.get("/", initialRunMiddleware, (req, res) => {
-//   console.log("initial run..", results);
-//   const latest = req.data;
-//   res.send(latest);
-//   // res.send(results);
-// });
+app.get("/", initialRunMiddleware, (req, res) => {
+  console.log("initial run..", results);
+  const latest = req.data;
+  res.send(latest);
+  // res.send(results);
+});
 
 const initialData = async (req, res, next) => {
   try {
@@ -202,21 +237,62 @@ app.get("/api/home", (req, res) => {
   });
 });
 
-function calculatePercentageChange(open, close) {
-  const openPrice = parseFloat(open);
-  const closePrice = parseFloat(close);
-  return (((closePrice - openPrice) / openPrice) * 100).toFixed(2);
-}
-
 app.get("/api/stock/:id", async (req, res) => {
   // const data = await fetcher()
   // console.log("checking", data)
   const securityId = req.params.id;
   console.log(securityId);
   const latest = await fetchStockData(securityId, true);
-  console.log(latest);
-  res.send(latest);
+
+  const refined = filterData(latest);
+  console.log(refined);
+  res.send(refined);
 });
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+function calculatePercentageChange(open, close) {
+  const openPrice = parseFloat(open);
+  const closePrice = parseFloat(close);
+  return (((closePrice - openPrice) / openPrice) * 100).toFixed(2);
+}
+
+function filterData(dataArray) {
+  const yearlyDates = [];
+  dataArray.forEach(([date, _], index) => {
+    const year = date.substr(0, 4);
+    if (
+      index === 0 ||
+      date.substr(0, 4) !== dataArray[index - 1][0].substr(0, 4)
+    ) {
+      yearlyDates.unshift(date);
+    } else if (
+      index === dataArray.length - 1 ||
+      date.substr(0, 4) !== dataArray[index + 1][0].substr(0, 4)
+    ) {
+      yearlyDates.unshift(date);
+    }
+  });
+
+  // Extract the "close" values for the yearly dates
+  const yearlyCloseData = yearlyDates.map((yearlyDate) => {
+    const matchingData = dataArray.find(([date, _]) => date === yearlyDate);
+    return parseFloat(matchingData[1]["4. close"]);
+  });
+  return { yearlyDates, yearlyCloseData };
+}
+
+function formatDateToString() {
+  const date = new Date();
+  const options = {
+    weekday: "long",
+    day: "2-digit",
+    month: "2-digit",
+  };
+
+  const formattedDate = date.toLocaleString("en-US", options);
+  const [weekday, day, month] = formattedDate.split(/,\s+|\/+/);
+  const formattedString = `${weekday}-${day}-${month}`;
+  return formattedString;
+}
