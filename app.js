@@ -89,11 +89,19 @@ const results = [];
 // const fetch = require("node-fetch");
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
+let firstRequest = true;
 async function fetchStockData(securityId, isSingleEntry) {
   const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${securityId}.BSE&outputsize=full&apikey=${process.env.API_KEY}`;
 
+  await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("end");
+      resolve(true);
+    }, 5000);
+  });
+
   try {
+    console.log("start");
     const response = await fetch(url);
     const data = await response.json();
 
@@ -116,7 +124,7 @@ const initialRunMiddleware = async (req, res, next) => {
     console.time("fetchTop-15");
     const fileData = await fs.promises.readFile("finalData.json", "utf8");
     const data = JSON.parse(fileData);
-    const top15Entries = Object.keys(data).slice(0, 15);
+    const top15Entries = Object.keys(data).slice(0, 50);
     const results = [];
     console.log(top15Entries.length, "total stocks count");
     for (const entry of top15Entries) {
