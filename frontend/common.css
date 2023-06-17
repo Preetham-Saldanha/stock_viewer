@@ -45,6 +45,7 @@ nav ul li a:hover {
   display: inline-block;
   margin-left: auto;
   border-radius: 5px;
+  /* width: 70%; */
 }
 
 #search-bar input[type="text"] {
