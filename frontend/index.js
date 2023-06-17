@@ -5,6 +5,14 @@
 //   console.log(data);
 // }
 
+class App {
+  constructor() {
+    this.stockData = {};
+  }
+
+  createInitialTable() {}
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch("http://localhost:3000/api/home");
   const data = await response.json();
@@ -24,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       High,
       Low,
       "Open-Close (%)": openClosePercentage,
-      "Market Cap": marketCap,
+      "Market Cap (Lakhs)": marketCap,
     } = entry;
 
     const row = document.createElement("tr");
@@ -36,8 +44,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       Close,
       High,
       Low,
-      openClosePercentage: openClosePercentage.toFixed(2),
-      marketCap: marketCap.toFixed(0),
+      openClosePercentage: openClosePercentage,
+      marketCap: marketCap,
     };
     row.innerHTML = `
         <td>${index + 1}</td>
@@ -48,8 +56,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         <td>${Close}</td>
         <td>${High}</td>
         <td>${Low}</td>
-        <td>${openClosePercentage.toFixed(2)}%</td>
-        <td>${marketCap.toFixed(0)}</td>
+        <td>${openClosePercentage}%</td>
+        <td>${marketCap}</td>
       `;
 
     tableBody.appendChild(row);
@@ -75,4 +83,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
+class Test {
+  constructor() {
+    this.greet = "hello";
+    this.run();
+  }
+
+  run() {
+    console.log("running...");
+  }
+}
+
+new Test();
 // Inside the DOMContentLoaded event listener

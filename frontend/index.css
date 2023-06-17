@@ -1,70 +1,8 @@
+/* =============home page landing section============= */
 * {
   --primary-color: #e5f9db;
   --secondary-color: #1b9c85;
   --accent-color: #ffe194;
-}
-
-html {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serifs;
-}
-
-body {
-  margin: 0;
-  background-color: var(--primary-color);
-}
-
-nav {
-  background-color: #f5f5f5;
-  padding: 20px;
-  box-sizing: border-box;
-  height: 70px;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #333;
-  padding: 5px 10px;
-}
-
-nav ul li a:hover {
-  color: #555;
-}
-
-#search-bar {
-  display: inline-block;
-  margin-left: auto;
-  border-radius: 5px;
-}
-
-#search-bar input[type="text"] {
-  padding: 5px;
-}
-
-#search-bar button[type="submit"] {
-  padding: 7px 10px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 100px;
-  padding: 20px;
 }
 
 .landing-section {
@@ -95,6 +33,20 @@ table {
   animation: slide-up 2s ease-in-out;
   color: var(--accent-color);
 }
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ==============================table=========== */
 table {
   border-collapse: collapse;
   width: 100%;
@@ -132,18 +84,6 @@ th {
   }
 }
 
-@keyframes slide-up {
-  0% {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -156,9 +96,10 @@ th {
 }
 
 .issuer:hover {
-  color: #333;
+  color: var(--accent-color);
   text-decoration: underline;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 #stockTableBody > tr:hover {

@@ -175,7 +175,7 @@ app.get("/api/home", (req, res) => {
     console.log(top15Entries.length);
     const results = top15Entries.map((entry) => {
       const stockData = data[entry]["Stock Data"];
-      const marketCap = data[entry]["marketCap"];
+      const marketCap = Number.parseFloat(data[entry]["marketCap"]).toFixed(2);
       //   console.log(stockData, "dataaaaaaa");
       return {
         "Security Code": data[entry]["Security Code"],
@@ -190,7 +190,7 @@ app.get("/api/home", (req, res) => {
           stockData[1]["1. open"],
           stockData[1]["4. close"]
         ),
-        "Market Cap": marketCap,
+        "Market Cap (Lakhs)": marketCap,
       };
     });
 
@@ -205,7 +205,7 @@ app.get("/api/home", (req, res) => {
 function calculatePercentageChange(open, close) {
   const openPrice = parseFloat(open);
   const closePrice = parseFloat(close);
-  return ((closePrice - openPrice) / openPrice) * 100;
+  return (((closePrice - openPrice) / openPrice) * 100).toFixed(2);
 }
 
 app.get("/api/stock/:id", async (req, res) => {
