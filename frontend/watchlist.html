@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock-view</title>
+    <link rel="stylesheet" type="text/css" href="common.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/watchlist.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <!-- <li><a href="insights.html">Insights</a></li> -->
+        <div id="search-overlay"></div>
+
+        <li id="search-bar" class="landing-description">
+          <input type="text" placeholder="Search..." />
+          <div class="search-result-section">
+            <!-- <div>Ril</div> -->
+          </div>
+        </li>
+
+        <li><a href="watchlist.html">Watchlist</a></li>
+        <li><a href="portfolio.html">My Portfolio</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <h1 class="heading">Watchlist</h1>
+      <p class="sub-heading" id="watchlist-no-of-stocks">test</p>
+      <div class="stock-card-container" id="watchlist-container"></div>
+    </main>
+
+    <script src="./utils/search.js"></script>
+    <script src="./pages/watchlist.js"></script>
+  </body>
+</html>

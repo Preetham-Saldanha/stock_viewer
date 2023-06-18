@@ -144,7 +144,7 @@ class SearchBar {
       console.log(data, "test");
 
       this.searchResultSection.innerHTML = "";
-      if (data.length === 0) {
+      if (data?.length === 0) {
         return;
       }
       data?.forEach((stock) => {

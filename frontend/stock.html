@@ -5,24 +5,27 @@
     <title>Line Graph with Chart.js</title>
     <link rel="stylesheet" type="text/css" href="./styles/stock.css" />
     <link rel="stylesheet" type="text/css" href="common.css" />
-    <style></style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
   <body>
+    <div id="popup">
+      <div class="popup-overlay"></div>
+      <div class="modal"></div>
+    </div>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <!-- <li><a href="insights.html">Insights</a></li> -->
-        <li id="search-bar">
-          <div id="search-overlay"></div>
+        <div id="search-overlay"></div>
 
-          <input
-            type="text"
-            placeholder="Search..."
-            onchange="handleSearch()"
-          />
+        <li id="search-bar" class="landing-description">
+          <input type="text" placeholder="Search..." />
+          <div class="search-result-section">
+            <!-- <div>Ril</div> -->
+          </div>
         </li>
+
         <li><a href="watchlist.html">Watchlist</a></li>
         <li><a href="portfolio.html">My Portfolio</a></li>
       </ul>
@@ -31,10 +34,10 @@
     <section class="stock-top-section">
       <div class="canvas-container"><canvas id="lineChart"></canvas></div>
       <div class="buttons-container">
-        <button class="button blue-button">
+        <button class="button blue-button" id="addToWL">
           <span class="plus-icon">&#43;</span> Add To Watchlist
         </button>
-        <button class="button red-button">
+        <button class="button red-button" id="addToPF">
           <span class="plus-icon">&#43;</span> Add to Portfolio
         </button>
       </div>
@@ -42,5 +45,6 @@
     <div id="stock-details-container" class="container"></div>
 
     <script src="./pages/stock.js"></script>
+    <script src="./utils/search.js"></script>
   </body>
 </html>

@@ -1,0 +1,76 @@
+* {
+  --primary-color: #e5f9db;
+  --secondary-color: #1b9c85;
+  --accent-color: #ffe194;
+  --portfolio-color: #007bff;
+  --portfolio-color: #1b9c85;
+  --dim-color: #9bf2e2;
+}
+
+.heading,
+#portfolio-no-of-stocks,
+h4,
+p {
+  margin: 0;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--secondary-color);
+}
+#portfolio-no-of-stocks {
+  color: var(--portfolio-color);
+  font-weight: 600;
+}
+
+.sector-name {
+  color: black;
+  font-weight: 400;
+}
+
+#portfolio-container {
+  padding: 30px;
+  /* width: 100%; */
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* gap: 10px; */
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.empty-message {
+  color: var(--dim-color);
+  font-size: 5rem;
+  text-align: center;
+  width: 40%;
+  margin: auto;
+}
+
+.portfolio-card {
+  width: fit-content;
+  height: fit-content;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 7px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.view-button {
+  background-color: var(--portfolio-color);
+  color: white;
+  border-radius: 7px;
+  padding: 7px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: all 0.4s;
+  cursor: pointer;
+  margin: 7px 10px;
+}
+
+.view-button:hover {
+  transform: scale(1.05);
+}

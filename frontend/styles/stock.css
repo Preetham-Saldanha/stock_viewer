@@ -3,7 +3,7 @@
   --secondary-color: #1b9c85;
   --accent-color: #ffe194;
   --watchlist-color: #007bff;
-  --portfolio-color: #ff0066;
+  --portfolio-color: #1b9c85;
 }
 
 .stock-heading {
@@ -47,6 +47,7 @@
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
+  color: var(--secondary-color);
 }
 
 .stock-detail-value {
@@ -161,4 +162,70 @@ canvas {
   .buttons-container {
     height: 20vh;
   }
+}
+
+/* ================================popup css================== */
+
+/* #popup {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 5;
+} */
+
+.popup-overlay {
+  position: absolute;
+  background-color: black;
+  opacity: 0.5;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  display: none;
+}
+
+.modal {
+  position: absolute;
+  width: 300px;
+  padding: 10px;
+  background-color: var(--primary-color);
+  opacity: 1;
+  height: fit-content;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  z-index: 5;
+  gap: 10px;
+  margin-left: calc(50% - 150px);
+  margin-top: 20vh;
+  display: none;
+}
+
+.modal > div {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.modal > div > button {
+  padding: 10px;
+  width: 30%;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.modal > div > button:hover {
+  transform: scale(1.1);
 }
