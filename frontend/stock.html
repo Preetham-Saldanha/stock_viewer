@@ -13,21 +13,32 @@
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="insights.html">Insights</a></li>
+        <!-- <li><a href="insights.html">Insights</a></li> -->
         <li id="search-bar">
+          <div id="search-overlay"></div>
+
           <input
             type="text"
             placeholder="Search..."
             onchange="handleSearch()"
           />
-          <button type="submit">Search</button>
         </li>
         <li><a href="watchlist.html">Watchlist</a></li>
         <li><a href="portfolio.html">My Portfolio</a></li>
       </ul>
     </nav>
     <h1 class="stock-heading"></h1>
-    <div class="canvas-container"><canvas id="lineChart"></canvas></div>
+    <section class="stock-top-section">
+      <div class="canvas-container"><canvas id="lineChart"></canvas></div>
+      <div class="buttons-container">
+        <button class="button blue-button">
+          <span class="plus-icon">&#43;</span> Add To Watchlist
+        </button>
+        <button class="button red-button">
+          <span class="plus-icon">&#43;</span> Add to Portfolio
+        </button>
+      </div>
+    </section>
     <div id="stock-details-container" class="container"></div>
 
     <script src="./pages/stock.js"></script>

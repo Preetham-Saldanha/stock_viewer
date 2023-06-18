@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="index.css" />
     <link rel="stylesheet" type="text/css" href="common.css" />
   </head>
@@ -9,7 +11,15 @@
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="insights.html">Insights</a></li>
+        <!-- <li><a href="insights.html">Insights</a></li> -->
+        <div id="search-overlay"></div>
+
+        <li id="search-bar" class="landing-description">
+          <input type="text" placeholder="Search..." />
+          <div class="search-result-section">
+            <!-- <div>Ril</div> -->
+          </div>
+        </li>
 
         <li><a href="watchlist.html">Watchlist</a></li>
         <li><a href="portfolio.html">My Portfolio</a></li>
@@ -24,14 +34,6 @@
         <p class="landing-description">
           Find and analyze stocks like never before.
         </p>
-        <li id="search-bar" class="landing-description">
-          <input
-            type="text"
-            placeholder="Search..."
-            onchange="handleSearch()"
-          />
-          <button type="submit">Search</button>
-        </li>
       </div>
     </section>
 
@@ -76,6 +78,6 @@
       </div>
     </footer>
 
-    <script src="index.js"></script>
+    <script src="index.mjs"></script>
   </body>
 </html>

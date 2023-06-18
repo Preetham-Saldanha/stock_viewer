@@ -14,9 +14,19 @@ import fs from "fs";
 import fetch from "node-fetch";
 app.use(cors());
 
-const results = [];
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
+let jsonFileData;
+fs.readFile(
+  path.join(__dirname, "data_per_day", `Saturday-06-17.json`),
+  "utf8",
+  (err, data) => {
+    if (err) {
+      console.log("something went wrong with file", " Saturday-06-17.json");
+    }
+    jsonFileData = JSON.parse(data);
+  }
+);
+
 async function fetchStockData(securityId, isSingleEntry) {
   const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${securityId}.BSE&outputsize=full&apikey=${process.env.API_KEY}`;
 
@@ -42,7 +52,8 @@ async function fetchStockData(securityId, isSingleEntry) {
 app.get("/api/home", (req, res) => {
   // Read the JSON data from "finalData.json" or fetch it from a database
   fs.readFile(
-    path.join(__dirname, "data_per_day", `${formatDateToString()}.json`),
+    // path.join(__dirname, "data_per_day", `${formatDateToString()}.json`),
+    path.join(__dirname, "data_per_day", `Saturday-06-17.json`),
     "utf8",
     (err, fileData) => {
       if (err) {
@@ -56,7 +67,7 @@ app.get("/api/home", (req, res) => {
       console.log(data.length);
 
       const response = {
-        top_15_entries_with_stock_data: data.slice(0, 50),
+        top_15_entries_with_stock_data: data.slice(0, 20),
       };
 
       res.json(response);
@@ -77,6 +88,20 @@ app.get("/api/stock/:id", async (req, res) => {
 });
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+});
+
+app.get("/api/search", async (req, res) => {
+  const value = req.query.value;
+  const result = [];
+  for (let i = 0; i < jsonFileData.length; i++) {
+    let obj = jsonFileData[i];
+
+    if (obj["Issuer Name"]?.toLowerCase().includes(value.toLowerCase())) {
+      result.push(obj);
+    }
+  }
+  // console.log(obj["Issuer Name"].toLowercase());
+  res.json(result);
 });
 
 function calculatePercentageChange(open, close) {
