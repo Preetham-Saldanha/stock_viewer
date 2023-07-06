@@ -5,17 +5,25 @@
   --watchlist-color: #007bff;
   --portfolio-color: #1b9c85;
   --dim-color: #9bf2e2;
+  --delete: rgb(235, 87, 87);
 }
 
 .heading,
 #watchlist-no-of-stocks,
-h4,
+.card-heading,
 p {
   margin: 0;
   text-align: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--secondary-color);
 }
+
+.card-heading {
+  font-weight: 700;
+  /* width: max-content; */
+  text-align: center;
+}
+
 #watchlist-no-of-stocks {
   color: var(--watchlist-color);
   font-weight: 600;
@@ -29,14 +37,14 @@ p {
 #watchlist-container {
   padding: 30px;
   /* width: 100vw; */
-  height: 80vh;
+  /* height: 80vh; */
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  /* gap: 10px; */
+  /* justify-content: space-around; */
+  gap: 10px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .empty-message {
@@ -48,8 +56,9 @@ p {
 }
 
 .watchlist-card {
-  width: fit-content;
+  width: 250px;
   height: fit-content;
+
   padding: 10px;
   box-sizing: border-box;
   display: flex;
@@ -58,19 +67,56 @@ p {
   border-radius: 7px;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
+
+.buttons-container {
+  display: flex;
+  width: 75%;
+  margin-left: auto;
+  align-items: center;
+  gap: 10px;
+  /* background-color: brown; */
+}
+
 .view-button {
   background-color: var(--watchlist-color);
+  width: 70%;
   color: white;
   border-radius: 7px;
-  padding: 7px;
+  padding: 10px 9px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: none;
   transition: all 0.4s;
   cursor: pointer;
-  margin: 7px 10px;
+  margin-top: 7px;
 }
 
-.view-button:hover {
+.view-button:hover,
+.remove-button:hover {
   transform: scale(1.05);
+  cursor: pointer;
 }
+
+.remove-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.remove-button {
+  background-color: white;
+  color: #1b9c85;
+  /* margin-top: 7px; */
+}
+
+/* @keyframes heading-marquee-effect {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-100%, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+} */

@@ -91,6 +91,7 @@ class Stock {
     this.handleAddToPortfolio();
     this.handleAddToWatchlist();
   }
+
   addToStorage(storePlace, stockData) {
     console.log(stockData);
     const currentWL = window.localStorage.getItem(storePlace);
@@ -111,7 +112,7 @@ class Stock {
         }
       }
 
-      // if estock is not already present in wl
+      // if stock is not already present in wl
       if (!flag) {
         window.localStorage.setItem(
           storePlace,
@@ -123,14 +124,14 @@ class Stock {
       }
     }
   }
-  // add this methpd later
+  // add this method later
   handleEvent(message) {}
 
   handlePopup(message, link) {
     // Create the modal container
     const modalContainer = document.querySelector(".modal");
     const popupOverlay = document.querySelector(".popup-overlay");
-
+    document.body.style.overflowY = "hidden";
     // Create the heading element
     const heading = document.createElement("h2");
     heading.textContent = message;
@@ -153,6 +154,13 @@ class Stock {
       modalContainer.innerHTML = "";
       popupOverlay.style.display = "none";
       modalContainer.style.display = "none";
+      document.body.style.overflow = "visible";
+    };
+    popupOverlay.onclick = () => {
+      modalContainer.innerHTML = "";
+      popupOverlay.style.display = "none";
+      modalContainer.style.display = "none";
+      document.body.style.overflow = "visible";
     };
     // Append the buttons to the button container
     buttonContainer.appendChild(yesButton);
